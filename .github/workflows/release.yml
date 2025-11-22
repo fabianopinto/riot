@@ -28,6 +28,9 @@ jobs:
       - name: Run tests
         run: go test -v ./...
 
+      - name: Install Syft
+        uses: anchore/sbom-action/download-syft@0.17.10
+
       - name: Extract release notes
         id: extract_notes
         run: |
