@@ -45,13 +45,10 @@ archives:
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
-    format: tar.gz
     files:
       - LICENSE
       - README.md
       - CHANGELOG.md
-    builds:
-      - riot
 
   - id: riot-windows
     name_template: >-
@@ -113,42 +110,43 @@ release:
     ### Using Binary
     Download the appropriate binary for your platform from the assets below.
 
-brews:
-  - name: riot
-    ids:
-      - riot-unix
-    url_template: "https://github.com/fabianopinto/riot/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
-    directory: Formula
-    homepage: https://github.com/fabianopinto/riot
-    description: RIoT - A Go application
-    license: MIT
-    install: |
-      bin.install "riot"
-    repository:
-      owner: fabianopinto
-      name: homebrew-tap
-      branch: main
-      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+# DISABLED - brews is being phased out in favor of homebrew_casks
+# brews:
+#   - name: riot
+#     ids:
+#       - riot-unix
+#     url_template: "https://github.com/fabianopinto/riot/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+#     directory: Formula
+#     homepage: https://github.com/fabianopinto/riot
+#     description: RIoT - A Go application
+#     license: MIT
+#     install: |
+#       bin.install "riot"
+#     repository:
+#       owner: fabianopinto
+#       name: homebrew-tap
+#       branch: main
+#       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
 
-dockers:
-  - image_templates:
-      - "fabianopinto/riot:{{ .Tag }}"
-      - "fabianopinto/riot:v{{ .Major }}"
-      - "fabianopinto/riot:v{{ .Major }}.{{ .Minor }}"
-      - "fabianopinto/riot:latest"
-    dockerfile: Dockerfile
-    build_flag_templates:
-      - "--pull"
-      - "--label=org.opencontainers.image.created={{ .Date }}"
-      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
-      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
-      - "--label=org.opencontainers.image.version={{ .Version }}"
-      - "--platform=linux/amd64"
+# DISABLED - dockers is being phased out and replaced by dockers_v2
+# dockers:
+#   - image_templates:
+#       - "fabianopinto/riot:{{ .Tag }}"
+#       - "fabianopinto/riot:v{{ .Major }}"
+#       - "fabianopinto/riot:v{{ .Major }}.{{ .Minor }}"
+#       - "fabianopinto/riot:latest"
+#     dockerfile: Dockerfile
+#     build_flag_templates:
+#       - "--pull"
+#       - "--label=org.opencontainers.image.created={{ .Date }}"
+#       - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+#       - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+#       - "--label=org.opencontainers.image.version={{ .Version }}"
+#       - "--platform=linux/amd64"
 
 # SBOM generation disabled - requires syft to be installed
 # sboms:
 #   - artifacts: archive
 
-# Signing disabled for now
-# signs:
-#   - artifacts: checksum
+signs:
+  - artifacts: checksum
