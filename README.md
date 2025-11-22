@@ -1,3 +1,7 @@
+<div align="center">
+  <img src=".github/logo.png" alt="kaitai-struct-ts" width="200"/>
+</div>
+
 # RIoT
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/fabianopinto/riot)](https://goreportcard.com/report/github.com/fabianopinto/riot)
