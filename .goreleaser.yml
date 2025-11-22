@@ -134,6 +134,14 @@ sboms:
     documents:
       - "${artifact}.sbom.json"
 
-# DISABLED - gpg: no default secret key
-# signs:
-#   - artifacts: checksum
+signs:
+  - artifacts: checksum
+    cmd: gpg
+    args:
+      - "--batch"
+      - "--local-user"
+      - "{{ .Env.GPG_FINGERPRINT }}"
+      - "--output"
+      - "${signature}"
+      - "--detach-sign"
+      - "${artifact}"
