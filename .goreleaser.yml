@@ -45,7 +45,8 @@ archives:
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
-    format: tar.gz
+    formats:
+      - tar.gz
     files:
       - LICENSE
       - README.md
@@ -59,7 +60,8 @@ archives:
       {{- if eq .Arch "amd64" }}x86_64
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
-    format: zip
+    formats:
+      - zip
     files:
       - LICENSE
       - README.md
@@ -125,9 +127,12 @@ homebrew_casks:
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
 
 sboms:
-  - artifacts: archive
+  - id: archieve
+    artifacts: archive
+    ids:
+      - riot-unix
     documents:
-      - "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}.sbom.json"
+      - "${artifact}.sbom.json"
 
 # DISABLED - gpg: no default secret key
 # signs:
