@@ -117,7 +117,7 @@ brews:
   - name: riot
     ids:
       - riot-unix
-    url_template: "https://github.com/fabianopinto/riot/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    url_template: "https://github.com/fabianopinto/riot/releases/download/{{.Tag}}/{{.ArtifactName}}"
     directory: Formula
     homepage: https://github.com/fabianopinto/riot
     description: RIoT - A Go application
@@ -127,7 +127,11 @@ brews:
     repository:
       owner: fabianopinto
       name: homebrew-tap
-      branch: main
+      branch: "{{.ProjectName}}-{{.Version}}"
+      pull_request:
+        enabled: true
+        base:
+          branch: main
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
 
 # Docker builds disabled - requires go.sum file
