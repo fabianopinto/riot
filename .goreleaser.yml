@@ -109,23 +109,6 @@ release:
     ### Using Binary
     Download the appropriate binary for your platform from the assets below.
 
-# DISABLED - brews is being phased out in favor of homebrew_casks
-# brews:
-#   - name: riot
-#     ids:
-#       - riot-unix
-#     url_template: "https://github.com/fabianopinto/riot/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
-#     directory: Formula
-#     description: RIoT - A Go application
-#     license: MIT
-#     install: |
-#       bin.install "riot"
-#     repository:
-#       owner: fabianopinto
-#       name: homebrew-tap
-#       branch: main
-#       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
-
 homebrew_casks:
   - name: riot
     ids:
@@ -140,24 +123,6 @@ homebrew_casks:
       name: homebrew-tap
       branch: main
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
-
-# DISABLED - brews is being phased out in favor of homebrew_casks
-# brews:
-#   - name: riot
-#     ids:
-#       - riot-unix
-#     url_template: "https://github.com/fabianopinto/riot/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
-#     directory: Formula
-#     homepage: https://github.com/fabianopinto/riot
-#     description: RIoT - A Go application
-#     license: MIT
-#     install: |
-#       bin.install "riot"
-#     repository:
-#       owner: fabianopinto
-#       name: homebrew-tap
-#       branch: main
-#       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
 
 # DISABLED - dockers is being phased out and replaced by dockers_v2
 # dockers:
@@ -174,6 +139,11 @@ homebrew_casks:
 #       - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
 #       - "--label=org.opencontainers.image.version={{ .Version }}"
 #       - "--platform=linux/amd64"
+
+dockerhub:
+  - username: "fabianopinto"
+    secret_name: DOCKER_HUB_TOKEN
+    description: "RIoT - A Go application"
 
 # DISABLED - requires syft to be installed
 # sboms:
