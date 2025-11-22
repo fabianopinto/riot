@@ -143,10 +143,14 @@ make check
 
 2. **Configure GitHub Repository Settings**
 
-   - Enable Issues and Discussions
-   - Set up branch protection rules for `main`
-   - Configure required status checks
-   - Enable Dependabot security updates
+   After creating your GitHub repository, complete these initial configuration tasks to ensure proper project management and security:
+
+   - **Enable Issues and Discussions**: Activates GitHub's issue tracking system for bug reports and feature requests, plus Discussions for community conversations
+   - **Set up branch protection rules**: Implements safeguards on the `main` branch to prevent direct pushes and enforce quality standards
+   - **Configure required status checks**: Ensures CI/CD pipelines (tests, linting, builds) must pass before merging
+   - **Enable Dependabot security updates**: Automatically monitors dependencies for security vulnerabilities and creates PRs to update them
+
+   See detailed instructions below for each configuration step.
 
 3. **Update SECURITY.md**
 
@@ -159,22 +163,78 @@ make check
 
 ### Branch Protection Rules
 
-Set these up on GitHub (Settings → Branches → Add rule):
+Set these up on GitHub to protect your main branch and enforce code quality standards.
 
-- Branch name pattern: `main`
-- ✅ Require a pull request before merging
-- ✅ Require approvals (1)
-- ✅ Require status checks to pass before merging
-  - Select: `Test`, `Lint`, `Build`
-- ✅ Require conversation resolution before merging
-- ✅ Do not allow bypassing the above settings
+**Navigation**: GitHub Repository → Settings → Branches → Add rule
+
+**Configuration Steps**:
+
+1. **Branch name pattern**: `main`
+   - Applies these protection rules specifically to the main branch
+
+2. **✅ Require a pull request before merging**
+   - Prevents direct commits to main
+   - All changes must go through pull requests for review
+
+3. **✅ Require approvals (1)**
+   - At least one reviewer must approve the PR before merging
+   - Ensures peer review and catches potential issues
+
+4. **✅ Require status checks to pass before merging**
+   - CI/CD workflows must succeed before merging
+   - Select these required checks: `Test`, `Lint`, `Build`
+   - Prevents merging code that breaks tests or fails quality standards
+
+5. **✅ Require conversation resolution before merging**
+   - All PR comments and discussions must be resolved
+   - Ensures all feedback is addressed before merging
+
+6. **✅ Do not allow bypassing the above settings**
+   - Even administrators must follow these rules
+   - No exceptions - maintains consistent code quality
+
+These rules enforce code quality, peer review, and prevent accidental breaking changes to the main branch.
 
 ### Enable GitHub Features
 
-1. **Issues**: Settings → Features → ✅ Issues
-2. **Discussions**: Settings → Features → ✅ Discussions
-3. **Dependabot**: Security → Code security → Enable Dependabot alerts
-4. **Code scanning**: Security → Code security → Set up CodeQL
+Activate these GitHub features to enhance project management, security monitoring, and community engagement.
+
+**Feature Activation Steps**:
+
+1. **Issues**
+   - **Navigation**: Repository Settings → Features → ✅ Enable Issues
+   - **Purpose**: Enables bug tracking, feature requests, and task management
+   - **Benefits**:
+     - Works with the issue templates in `.github/ISSUE_TEMPLATE/`
+     - Provides structured bug reports and feature requests
+     - Integrates with project boards and milestones
+
+2. **Discussions**
+   - **Navigation**: Repository Settings → Features → ✅ Enable Discussions
+   - **Purpose**: Provides a forum for community questions, ideas, and conversations
+   - **Benefits**:
+     - Separates general discussion from actionable issues
+     - Creates a knowledge base through Q&A format
+     - Builds community engagement without cluttering issues
+
+3. **Dependabot**
+   - **Navigation**: Repository Security → Code security → Enable Dependabot alerts
+   - **Purpose**: Automatically scans Go dependencies for known vulnerabilities
+   - **Benefits**:
+     - Creates automated PRs to update vulnerable packages
+     - Keeps your project secure with minimal manual effort
+     - Provides detailed vulnerability information and remediation guidance
+
+4. **Code Scanning (CodeQL)**
+   - **Navigation**: Repository Security → Code security → Set up CodeQL
+   - **Purpose**: Enables automated security analysis of your codebase
+   - **Benefits**:
+     - Detects potential security vulnerabilities and coding errors
+     - Already configured via `.github/workflows/codeql.yml` in your project
+     - Runs automatically on PRs and weekly schedules
+     - Provides actionable security insights
+
+These features provide comprehensive project management, security monitoring, and community engagement capabilities for your open-source Go project.
 
 ## 🔧 Development Workflow
 
