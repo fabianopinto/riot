@@ -30,9 +30,9 @@ builds:
         goarch: arm
     ldflags:
       - -s -w
-      - -X main.version={{.Version}}
-      - -X main.commit={{.Commit}}
-      - -X main.date={{.Date}}
+      - -X main.version={{ .Version }}
+      - -X main.commit={{ .Commit }}
+      - -X main.date={{ .Date }}
       - -X main.builtBy=goreleaser
 
 archives:
@@ -107,48 +107,44 @@ release:
 
     ### Using go install
     ```bash
-    go install github.com/fabianopinto/riot/cmd/riot@{{.Tag}}
+    go install github.com/fabianopinto/riot/cmd/riot@{{ .Tag }}
     ```
 
     ### Using Binary
     Download the appropriate binary for your platform from the assets below.
 
-brews:
-  - name: riot
-    ids:
-      - riot-unix
-    url_template: "https://github.com/fabianopinto/riot/releases/download/{{.Tag}}/{{.ArtifactName}}"
-    directory: Formula
-    homepage: https://github.com/fabianopinto/riot
-    description: RIoT - A Go application
-    license: MIT
-    install: |
-      bin.install "riot"
-    repository:
-      owner: fabianopinto
-      name: homebrew-tap
-      branch: "{{.ProjectName}}-{{.Version}}"
-      pull_request:
-        enabled: true
-        base:
-          branch: main
-      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+# brews:
+#   - name: riot
+#     ids:
+#       - riot-unix
+#     url_template: "https://github.com/fabianopinto/riot/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+#     directory: Formula
+#     homepage: https://github.com/fabianopinto/riot
+#     description: RIoT - A Go application
+#     license: MIT
+#     install: |
+#       bin.install "riot"
+#     repository:
+#       owner: fabianopinto
+#       name: homebrew-tap
+#       branch: main
+#       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
 
-# Docker builds disabled - requires go.sum file
-# dockers:
-#   - image_templates:
-#       - "fabianopinto/riot:{{ .Tag }}"
-#       - "fabianopinto/riot:v{{ .Major }}"
-#       - "fabianopinto/riot:v{{ .Major }}.{{ .Minor }}"
-#       - "fabianopinto/riot:latest"
-#     dockerfile: Dockerfile
-#     build_flag_templates:
-#       - "--pull"
-#       - "--label=org.opencontainers.image.created={{.Date}}"
-#       - "--label=org.opencontainers.image.title={{.ProjectName}}"
-#       - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-#       - "--label=org.opencontainers.image.version={{.Version}}"
-#       - "--platform=linux/amd64"
+Docker builds disabled - requires go.sum file
+dockers:
+  - image_templates:
+      - "fabianopinto/riot:{{ .Tag }}"
+      - "fabianopinto/riot:v{{ .Major }}"
+      - "fabianopinto/riot:v{{ .Major }}.{{ .Minor }}"
+      - "fabianopinto/riot:latest"
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--platform=linux/amd64"
 
 # SBOM generation disabled - requires syft to be installed
 # sboms:
