@@ -80,6 +80,13 @@ main() {
         log_info "goreleaser already installed"
     fi
 
+    if ! command_exists syft; then
+        log_info "Installing syft..."
+        go install github.com/anchore/syft/cmd/syft@latest
+    else
+        log_info "syft already installed"
+    fi
+
     # Check for GitHub CLI (optional)
     if ! command_exists gh; then
         log_warn "GitHub CLI (gh) not found. Install it for better GitHub integration."

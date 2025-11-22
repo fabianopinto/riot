@@ -100,6 +100,7 @@ tools:
 	go install golang.org/x/tools/cmd/goimports@latest
 	go install github.com/goreleaser/goreleaser/v2@latest
 	go install github.com/git-chglog/git-chglog/cmd/git-chglog@latest
+	go install github.com/anchore/syft/cmd/syft@latest
 	@echo "Tools installed"
 
 ## release-snapshot: Create a snapshot release (no publish)

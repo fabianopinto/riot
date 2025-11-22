@@ -124,25 +124,10 @@ homebrew_casks:
       branch: main
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
 
-# DISABLED - dockers is being phased out and replaced by dockers_v2
-# dockers:
-#   - image_templates:
-#       - "fabianopinto/riot:{{ .Tag }}"
-#       - "fabianopinto/riot:v{{ .Major }}"
-#       - "fabianopinto/riot:v{{ .Major }}.{{ .Minor }}"
-#       - "fabianopinto/riot:latest"
-#     dockerfile: Dockerfile
-#     build_flag_templates:
-#       - "--pull"
-#       - "--label=org.opencontainers.image.created={{ .Date }}"
-#       - "--label=org.opencontainers.image.title={{ .ProjectName }}"
-#       - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
-#       - "--label=org.opencontainers.image.version={{ .Version }}"
-#       - "--platform=linux/amd64"
-
-# DISABLED - requires syft to be installed
-# sboms:
-#   - artifacts: archive
+sboms:
+  - artifacts: archive
+    documents:
+      - "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}.sbom.json"
 
 # DISABLED - gpg: no default secret key
 # signs:
