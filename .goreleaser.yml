@@ -120,6 +120,8 @@ brews:
     repository:
       owner: fabianopinto
       name: homebrew-tap
+      branch: main
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     directory: Formula
     homepage: https://github.com/fabianopinto/riot
     description: RIoT - A Go application
