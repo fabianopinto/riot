@@ -29,7 +29,7 @@ jobs:
         run: go test -v ./...
 
       - name: Install Syft
-        uses: anchore/sbom-action/download-syft@0.17.10
+        uses: anchore/sbom-action/download-syft@v0.17.10
 
       - name: Extract release notes
         id: extract_notes
