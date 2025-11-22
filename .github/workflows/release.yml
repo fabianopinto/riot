@@ -1,0 +1,69 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+          cache: true
+
+      - name: Run tests
+        run: go test -v ./...
+
+      - name: Extract release notes
+        id: extract_notes
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          # Extract section from CHANGELOG.md for this version
+          # Format: ## v0.1.0 - 2025-11-22
+          awk -v ver="$VERSION" '
+            /^## / {
+              if (found) exit
+              if ($0 ~ ver) {
+                found=1
+                next
+              }
+            }
+            found && /^###/ { print; next }
+            found && /^-/ { print; next }
+            found && /^[[:space:]]*$/ { print; next }
+            found && /^[[:space:]]+/ { print; next }
+          ' CHANGELOG.md > /tmp/release_notes.md
+
+          # Show extracted notes for debugging
+          echo "Release notes for $VERSION:"
+          cat /tmp/release_notes.md
+
+          # If empty, create a default message
+          if [ ! -s /tmp/release_notes.md ]; then
+            echo "Release $VERSION" > /tmp/release_notes.md
+            echo "" >> /tmp/release_notes.md
+            echo "See [CHANGELOG.md](https://github.com/fabianopinto/riot/blob/main/CHANGELOG.md) for details." >> /tmp/release_notes.md
+          fi
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: '~> v2'
+          args: release --clean --release-notes=/tmp/release_notes.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

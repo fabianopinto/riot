@@ -1,0 +1,114 @@
+# yaml-language-server: $schema=https://json.schemastore.org/golangci-lint.json
+version: "2"
+
+run:
+  timeout: 5m
+  tests: true
+  modules-download-mode: readonly
+
+linters:
+  enable:
+    - errcheck # Checks for unchecked errors
+    - govet # Reports suspicious constructs
+    - ineffassign # Detects ineffectual assignments
+    - staticcheck # Advanced Go linter (includes gosimple and stylecheck in v2)
+    - unused # Checks for unused constants, variables, functions and types
+    - asasalint # Checks for pass []any as any in variadic func(...any)
+    - asciicheck # Checks that all code identifiers does not have non-ASCII symbols
+    - bidichk # Checks for dangerous unicode character sequences
+    - bodyclose # Checks whether HTTP response body is closed successfully
+    - dupl # Tool for code clone detection
+    - durationcheck # Checks for two durations multiplied together
+    - errname # Checks that sentinel errors are prefixed with the Err and error types are suffixed with the Error
+    - errorlint # Errorlint is a linter for that can be used to find code that will cause problems with the error wrapping scheme introduced in Go 1.13
+    - exhaustive # Checks exhaustiveness of enum switch statements
+    - gochecknoinits # Checks that no init functions are present in Go code
+    - goconst # Finds repeated strings that could be replaced by a constant
+    - gocritic # Provides diagnostics that check for bugs, performance and style issues
+    - gocyclo # Computes and checks the cyclomatic complexity of functions
+    - godot # Checks if comments end in a period
+    - goprintffuncname # Checks that printf-like functions are named with f at the end
+    - gosec # Inspects source code for security problems
+    - misspell # Finds commonly misspelled English words
+    - nakedret # Finds naked returns in functions greater than a specified function length
+    - noctx # Finds sending http request without context.Context
+    - nolintlint # Reports ill-formed or insufficient nolint directives
+    - predeclared # Finds code that shadows one of Go's predeclared identifiers
+    - revive # Fast, configurable, extensible, flexible, and beautiful linter for Go
+    - thelper # Detects Go test helpers without t.Helper() call and checks the consistency of test helpers
+    - unconvert # Removes unnecessary type conversions
+    - unparam # Reports unused function parameters
+    - whitespace # Checks for unnecessary newlines at the start and end of functions, if, for, etc.
+
+  settings:
+    errcheck:
+      check-type-assertions: true
+      check-blank: true
+
+    govet:
+      enable-all: true
+      disable:
+        - shadow
+
+    gocyclo:
+      min-complexity: 15
+
+    dupl:
+      threshold: 100
+
+    goconst:
+      min-len: 3
+      min-occurrences: 3
+
+    misspell:
+      locale: US
+
+    gocritic:
+      enabled-tags:
+        - diagnostic
+        - experimental
+        - opinionated
+        - performance
+        - style
+
+    revive:
+      rules:
+        - name: exported
+          arguments:
+            - "checkPrivateReceivers"
+            - "disableStutteringCheck"
+
+    staticcheck:
+      checks: ["all", "-ST1000", "-ST1003"]
+
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - dupl
+          - gosec
+          - goconst
+
+      - linters:
+          - staticcheck
+        text: "SA1019:" # Ignore deprecation warnings
+
+      - linters:
+          - revive
+        text: "exported: exported .* should have comment"
+        path: _test\.go
+
+formatters:
+  enable:
+    - gci # Controls Go package import order
+    - gofmt # Checks whether code was gofmt-ed
+    - goimports # Formats import statements
+
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/fabianopinto/riot
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
