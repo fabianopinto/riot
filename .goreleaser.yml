@@ -45,7 +45,8 @@ archives:
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
-    format: [ tar.gz ]
+    format:
+      - tar.gz
     files:
       - LICENSE
       - README.md
@@ -59,7 +60,8 @@ archives:
       {{- if eq .Arch "amd64" }}x86_64
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
-    format: [ zip ]
+    format:
+      - zip
     files:
       - LICENSE
       - README.md
@@ -139,11 +141,6 @@ homebrew_casks:
 #       - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
 #       - "--label=org.opencontainers.image.version={{ .Version }}"
 #       - "--platform=linux/amd64"
-
-dockerhub:
-  - username: "fabianopinto"
-    secret_name: DOCKER_HUB_TOKEN
-    description: "RIoT - A Go application"
 
 # DISABLED - requires syft to be installed
 # sboms:
