@@ -116,6 +116,40 @@ release:
 #       - riot-unix
 #     url_template: "https://github.com/fabianopinto/riot/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
 #     directory: Formula
+#     description: RIoT - A Go application
+#     license: MIT
+#     install: |
+#       bin.install "riot"
+#     repository:
+#       owner: fabianopinto
+#       name: homebrew-tap
+#       branch: main
+#       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+
+homebrew_casks:
+  - name: riot
+    alternative_names:
+      - riot@{{ .Version }}
+      - riot@{{ .Major }}
+    url:
+      template: "https://github.com/fabianopinto/riot/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    commit_msg_template: "Brew cask update for {{ .ProjectName }} version {{ .Tag }}"
+    homepage: https://github.com/fabianopinto/riot
+    description: "RIoT - A Go application"
+    repository:
+      owner: fabianopinto
+      name: homebrew-tap
+      branch: main
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+      token_type: "github"
+
+# DISABLED - brews is being phased out in favor of homebrew_casks
+# brews:
+#   - name: riot
+#     ids:
+#       - riot-unix
+#     url_template: "https://github.com/fabianopinto/riot/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+#     directory: Formula
 #     homepage: https://github.com/fabianopinto/riot
 #     description: RIoT - A Go application
 #     license: MIT
