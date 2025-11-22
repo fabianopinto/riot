@@ -141,9 +141,10 @@ release:
 #       - "--label=org.opencontainers.image.version={{ .Version }}"
 #       - "--platform=linux/amd64"
 
-# SBOM generation disabled - requires syft to be installed
+# DISABLED - requires syft to be installed
 # sboms:
 #   - artifacts: archive
 
-signs:
-  - artifacts: checksum
+# DISABLED - gpg: no default secret key
+# signs:
+#   - artifacts: checksum
