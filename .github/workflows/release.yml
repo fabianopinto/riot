@@ -1,0 +1,88 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+          cache: true
+
+      - name: Run tests
+        run: go test -v ./...
+
+      - name: Install Syft
+        uses: anchore/sbom-action@v0
+
+      - name: Import GPG key
+        run: |
+          # Import the GPG private key
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+
+          # Configure GPG to work in non-interactive mode
+          echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          gpgconf --kill gpg-agent
+          gpg-agent --daemon --allow-loopback-pinentry
+
+          # Test the key with passphrase
+          echo "test" | gpg --batch --passphrase "${{ secrets.GPG_PASSPHRASE }}" --pinentry-mode loopback --local-user "${{ secrets.GPG_FINGERPRINT }}" --sign --armor > /dev/null
+
+      - name: Extract release notes
+        id: extract_notes
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          # Extract section from CHANGELOG.md for this version
+          # Format: ## v0.1.0 - 2025-11-22
+          awk -v ver="$VERSION" '
+            /^## / {
+              if (found) exit
+              if ($0 ~ ver) {
+                found=1
+                next
+              }
+            }
+            found && /^###/ { print; next }
+            found && /^-/ { print; next }
+            found && /^[[:space:]]*$/ { print; next }
+            found && /^[[:space:]]+/ { print; next }
+          ' CHANGELOG.md > /tmp/release_notes.md
+
+          # Show extracted notes for debugging
+          echo "Release notes for $VERSION:"
+          cat /tmp/release_notes.md
+
+          # If empty, create a default message
+          if [ ! -s /tmp/release_notes.md ]; then
+            echo "Release $VERSION" > /tmp/release_notes.md
+            echo "" >> /tmp/release_notes.md
+            echo "See [CHANGELOG.md](https://github.com/fabianopinto/riot/blob/main/CHANGELOG.md) for details." >> /tmp/release_notes.md
+          fi
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: '~> v2'
+          args: release --clean --release-notes=/tmp/release_notes.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          GPG_FINGERPRINT: ${{ secrets.GPG_FINGERPRINT }}

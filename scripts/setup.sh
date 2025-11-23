@@ -73,6 +73,20 @@ main() {
         log_info "goimports already installed"
     fi
 
+    if ! command_exists goreleaser; then
+        log_info "Installing goreleaser..."
+        go install github.com/goreleaser/goreleaser/v2@latest
+    else
+        log_info "goreleaser already installed"
+    fi
+
+    if ! command_exists syft; then
+        log_info "Installing syft..."
+        go install github.com/anchore/syft/cmd/syft@latest
+    else
+        log_info "syft already installed"
+    fi
+
     # Check for GitHub CLI (optional)
     if ! command_exists gh; then
         log_warn "GitHub CLI (gh) not found. Install it for better GitHub integration."

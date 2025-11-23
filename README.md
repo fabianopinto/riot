@@ -110,3 +110,6 @@ This project uses:
 
 - **Conventional Commits** for automated changelog generation
 - **Semantic Versioning** for release numbering
+- **GoReleaser** for automated release builds
+
+For maintainers, see [docs/RELEASE.md](docs/RELEASE.md) for the release process.

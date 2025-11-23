@@ -103,6 +103,11 @@ tools:
 	go install github.com/anchore/syft/cmd/syft@latest
 	@echo "Tools installed"
 
+## release-snapshot: Create a snapshot release (no publish)
+release-snapshot:
+	@echo "Creating snapshot release..."
+	goreleaser release --snapshot --clean
+
 ## docker-build: Build Docker image
 docker-build:
 	@echo "Building Docker image..."
@@ -140,3 +145,22 @@ changelog-next:
 		echo "git-chglog not found. Run 'make tools' to install it."; \
 		exit 1; \
 	fi
+
+## release-prepare: Prepare for a new release (version bump)
+release-prepare:
+	@echo "Preparing release..."
+	@read -p "Enter version (e.g., v1.0.0): " version; \
+	if [ -z "$$version" ]; then \
+		echo "Version cannot be empty"; \
+		exit 1; \
+	fi; \
+	echo "Updating CHANGELOG.md for $$version..."; \
+	git-chglog --next-tag $$version -o CHANGELOG.md; \
+	echo "CHANGELOG.md updated for $$version"; \
+	echo ""; \
+	echo "Next steps:"; \
+	echo "  1. Review CHANGELOG.md"; \
+	echo "  2. git add CHANGELOG.md"; \
+	echo "  3. git commit -m 'chore: prepare $$version release'"; \
+	echo "  4. git tag -a $$version -m 'Release $$version'"; \
+	echo "  5. git push origin main && git push origin $$version"
