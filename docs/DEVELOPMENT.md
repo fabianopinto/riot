@@ -102,19 +102,26 @@ chmod +x .git/hooks/pre-commit
 
 ```
 riot/
-├── cmd/                    # Command-line applications
-│   └── riot/              # Main application
-│       └── main.go        # Entry point
+├── cmd/                  # Command-line applications
+│   └── riot/             # Main application
+│       └── main.go       # Entry point
 │
-├── internal/              # Private application code
+├── internal/             # Private application code
 │   └── app/              # Application logic
 │       ├── app.go        # Main app code
 │       └── app_test.go   # Tests
 │
-├── pkg/                   # Public library code (reusable)
+├── pkg/                  # Public library code (reusable)
 │
-├── docs/                  # Documentation
+├── configs/              # Configuration files
+│
+├── scripts/              # Build and utility scripts
+│
+├── docs/                 # Documentation
 │   └── DEVELOPMENT.md    # This file
+│
+├── .github/              # GitHub-specific files
+│   └── workflows/        # CI/CD workflows
 │
 ├── go.mod                # Go module definition
 ├── go.sum                # Dependency checksums
@@ -352,6 +359,13 @@ generate:
 ```
 
 ## CI/CD
+
+### GitHub Actions
+
+Workflows are defined in `.github/workflows/`:
+
+- **ci.yml**: Runs on every push/PR (test, lint, build)
+- **codeql.yml**: Security scanning
 
 ### Local CI Testing
 

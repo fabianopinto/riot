@@ -4,6 +4,10 @@
 
 # RIoT
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/fabianopinto/riot)](https://goreportcard.com/report/github.com/fabianopinto/riot)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/fabianopinto/riot)](go.mod)
+
 A Go project built following best practices for open-source development.
 
 ## Table of Contents
@@ -68,7 +72,10 @@ make build
 ├── internal/           # Private application code
 │   └── app/            # Application logic
 ├── pkg/                # Public library code
+├── configs/            # Configuration files
+├── scripts/            # Build and utility scripts
 ├── docs/               # Documentation
+├── .github/            # GitHub specific files (workflows, templates)
 └── Makefile            # Build automation
 ```
 
