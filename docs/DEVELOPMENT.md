@@ -128,6 +128,7 @@ riot/
 ├── go.mod                # Go module definition
 ├── go.sum                # Dependency checksums
 ├── Makefile              # Build automation
+├── Dockerfile            # Docker image definition
 ├── .golangci.yml         # Linter configuration
 ├── README.md             # Project overview
 ├── CONTRIBUTING.md       # Contribution guidelines
@@ -274,6 +275,20 @@ make run
 goreleaser build --snapshot --clean
 
 # Binaries will be in dist/
+```
+
+### Docker Build
+
+```bash
+# Build Docker image
+make docker-build
+
+# Run in Docker
+make docker-run
+
+# Or manually
+docker build -t riot:latest .
+docker run --rm riot:latest
 ```
 
 ## Debugging

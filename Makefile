@@ -98,4 +98,17 @@ tools:
 	@echo "Installing development tools..."
 	go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
 	go install golang.org/x/tools/cmd/goimports@latest
+	go install github.com/goreleaser/goreleaser/v2@latest
+	go install github.com/git-chglog/git-chglog/cmd/git-chglog@latest
+	go install github.com/anchore/syft/cmd/syft@latest
 	@echo "Tools installed"
+
+## docker-build: Build Docker image
+docker-build:
+	@echo "Building Docker image..."
+	docker build -t $(BINARY_NAME):latest .
+
+## docker-run: Run Docker container
+docker-run: docker-build
+	@echo "Running Docker container..."
+	docker run --rm $(BINARY_NAME):latest
