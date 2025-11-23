@@ -121,7 +121,9 @@ riot/
 │   └── DEVELOPMENT.md    # This file
 │
 ├── .github/              # GitHub-specific files
-│   └── workflows/        # CI/CD workflows
+│   ├── workflows/        # CI/CD workflows
+│   ├── ISSUE_TEMPLATE/   # Issue templates
+│   └── PULL_REQUEST_TEMPLATE.md
 │
 ├── go.mod                # Go module definition
 ├── go.sum                # Dependency checksums
