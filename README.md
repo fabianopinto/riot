@@ -101,3 +101,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Issues**: [GitHub Issues](https://github.com/fabianopinto/riot/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/fabianopinto/riot/discussions)
+
+## Releases
+
+See [CHANGELOG.md](CHANGELOG.md) for a list of changes in each release.
+
+This project uses:
+
+- **Conventional Commits** for automated changelog generation
+- **Semantic Versioning** for release numbering

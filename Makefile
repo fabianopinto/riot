@@ -112,3 +112,31 @@ docker-build:
 docker-run: docker-build
 	@echo "Running Docker container..."
 	docker run --rm $(BINARY_NAME):latest
+
+## changelog: Generate CHANGELOG.md from git history
+changelog:
+	@echo "Generating CHANGELOG.md..."
+	@if command -v git-chglog > /dev/null; then \
+		git-chglog -o CHANGELOG.md; \
+		echo "CHANGELOG.md updated"; \
+	else \
+		echo "git-chglog not found. Run 'make tools' to install it."; \
+		exit 1; \
+	fi
+
+## changelog-next: Preview changelog for next release
+changelog-next:
+	@echo "Preview of changes since last tag:"
+	@if command -v git-chglog > /dev/null; then \
+		LAST_TAG=$$(git describe --tags --abbrev=0 2>/dev/null || echo ""); \
+		if [ -z "$$LAST_TAG" ]; then \
+			echo "No tags found. Showing all commits:"; \
+			git-chglog --next-tag v0.1.0; \
+		else \
+			NEXT_TAG=$$(echo $$LAST_TAG | awk -F. '{$$NF = $$NF + 1;} 1' OFS=.); \
+			git-chglog --next-tag $$NEXT_TAG $$LAST_TAG..; \
+		fi \
+	else \
+		echo "git-chglog not found. Run 'make tools' to install it."; \
+		exit 1; \
+	fi

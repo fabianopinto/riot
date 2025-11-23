@@ -132,6 +132,7 @@ riot/
 ├── .golangci.yml         # Linter configuration
 ├── README.md             # Project overview
 ├── CONTRIBUTING.md       # Contribution guidelines
+├── CHANGELOG.md          # Version history
 └── LICENSE               # MIT License
 ```
 
