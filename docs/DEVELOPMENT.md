@@ -47,6 +47,15 @@ This guide provides detailed instructions for developers working on RIoT.
   go install golang.org/x/tools/cmd/goimports@latest
   ```
 
+- **GoReleaser**: For releases
+
+  ```bash
+  # Install on macOS
+  brew install goreleaser
+
+  # Or download from https://goreleaser.com/install/
+  ```
+
 - **GitHub CLI** (optional but recommended): For GitHub operations
   ```bash
   # Install on macOS
@@ -129,6 +138,7 @@ riot/
 ├── go.sum                # Dependency checksums
 ├── Makefile              # Build automation
 ├── Dockerfile            # Docker image definition
+├── .goreleaser.yml       # Release configuration
 ├── .golangci.yml         # Linter configuration
 ├── README.md             # Project overview
 ├── CONTRIBUTING.md       # Contribution guidelines
@@ -383,6 +393,7 @@ generate:
 Workflows are defined in `.github/workflows/`:
 
 - **ci.yml**: Runs on every push/PR (test, lint, build)
+- **release.yml**: Runs on version tags (creates releases)
 - **codeql.yml**: Security scanning
 
 ### Local CI Testing

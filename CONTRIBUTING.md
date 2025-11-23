@@ -7,6 +7,7 @@ Thank you for your interest in contributing to RIoT! This document provides guid
 - [Code of Conduct](#code-of-conduct)
 - [Getting Started](#getting-started)
 - [Development Workflow](#development-workflow)
+- [Pull Request Process](#pull-request-process)
 - [Coding Standards](#coding-standards)
 - [Commit Message Guidelines](#commit-message-guidelines)
 - [Testing](#testing)
@@ -103,6 +104,45 @@ git rebase upstream/main
 ```bash
 git push origin feature/your-feature-name
 ```
+
+## Pull Request Process
+
+### Before Creating a PR
+
+- [ ] All tests pass (`make test`)
+- [ ] Code is formatted (`make fmt`)
+- [ ] Linter passes (`make lint`)
+- [ ] Documentation is updated
+- [ ] CHANGELOG.md is updated (add to Unreleased section)
+- [ ] Commits follow the commit message guidelines
+
+### Creating the PR
+
+1. Go to the [RIoT repository](https://github.com/fabianopinto/riot)
+2. Click "New Pull Request"
+3. Select your fork and branch
+4. Fill out the PR template completely
+5. Link any related issues
+
+### PR Review Process
+
+- At least one maintainer must approve the PR
+- All CI checks must pass
+- All review comments must be addressed
+- PRs may be merged using squash merge or rebase merge
+
+### After Your PR is Merged
+
+1. Delete your feature branch:
+   ```bash
+   git branch -d feature/your-feature-name
+   git push origin --delete feature/your-feature-name
+   ```
+2. Update your local main branch:
+   ```bash
+   git checkout main
+   git pull upstream main
+   ```
 
 ## Coding Standards
 
