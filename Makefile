@@ -34,6 +34,12 @@ test-coverage: test
 	$(GO) tool cover -html=coverage.out -o coverage.html
 	@echo "Coverage report: coverage.html"
 
+## lint: Run golangci-lint
+lint:
+	@echo "Running linter..."
+	@which golangci-lint > /dev/null || (echo "golangci-lint not found. Install it from https://golangci-lint.run/usage/install/" && exit 1)
+	golangci-lint run --timeout=5m
+
 ## fmt: Format code
 fmt:
 	@echo "Formatting code..."
@@ -45,8 +51,8 @@ vet:
 	@echo "Running go vet..."
 	$(GO) vet ./...
 
-## check: Run all checks (fmt, vet, test)
-check: fmt vet test
+## check: Run all checks (fmt, vet, lint, test)
+check: fmt vet lint test
 	@echo "All checks passed!"
 
 ## clean: Remove build artifacts
@@ -90,5 +96,6 @@ upgrade:
 ## tools: Install development tools
 tools:
 	@echo "Installing development tools..."
+	go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
 	go install golang.org/x/tools/cmd/goimports@latest
 	@echo "Tools installed"
