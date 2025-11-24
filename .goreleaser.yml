@@ -133,15 +133,3 @@ sboms:
       - riot-unix
     documents:
       - "${artifact}.sbom.json"
-
-signs:
-  - artifacts: checksum
-    cmd: gpg
-    args:
-      - "--batch"
-      - "--local-user"
-      - "{{ .Env.GPG_FINGERPRINT }}"
-      - "--output"
-      - "${signature}"
-      - "--detach-sign"
-      - "${artifact}"
