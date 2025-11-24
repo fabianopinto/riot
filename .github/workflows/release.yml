@@ -31,20 +31,6 @@ jobs:
       - name: Install Syft
         uses: anchore/sbom-action@v0
 
-      - name: Import GPG key
-        run: |
-          # Import the GPG private key
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
-
-          # Configure GPG to work in non-interactive mode
-          echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
-          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
-          gpgconf --kill gpg-agent
-          gpg-agent --daemon --allow-loopback-pinentry
-
-          # Test the key with passphrase
-          echo "test" | gpg --batch --passphrase "${{ secrets.GPG_PASSPHRASE }}" --pinentry-mode loopback --local-user "${{ secrets.GPG_FINGERPRINT }}" --sign --armor > /dev/null
-
       - name: Extract release notes
         id: extract_notes
         run: |
@@ -85,4 +71,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
-          GPG_FINGERPRINT: ${{ secrets.GPG_FINGERPRINT }}
